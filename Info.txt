@@ -16,4 +16,4 @@ Consider the bridge of the nose which we identified as edge detection. Now, we s
 Now, what viola jones algorithm does is compare the numbers we assigned to the ideal scenario(which is one side completely white, one side completely black). So it takes the average of the brightness of the pixels on the white side of the edge haar and the average of brightness of the pixels on the black side of the edge haar. It then subtracts white average from black average.
 Now, in an ideal scenario, the result for black-white should give 1. SO, as its not possible to get 1, there are some threshold sdefined by training the classifier. If the result is greater than 0.3 (say) , then the region is correctly classified as adge haar.
 
-See https://www.udemy.com/computer-vision-a-z/learn/lecture/8085352#questions
+aaaaaaaaaaaaaaaaaaa    See https://www.udemy.com/computer-vision-a-z/learn/lecture/8085352#questions
