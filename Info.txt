@@ -1,0 +1,19 @@
+First of all, all the algorithms work on grayscale features, not colored.
+
+Viola Jones Algorithm for face detection->
+
+This is mainly used in OpenCV and was developed in 2001. It's still pretty good but deep learning is now slowly overpassing it.
+It takes the image in grayscale, and forms a little box and traverses the whole image with that box. The box detected eyebrows,eyes,nose,mouth and thus recognizes the face. Beacuse of this, i fmany such squares detect a face, there is high probablity that a face is present in the image. The size of the box also varies over every iteration.
+
+Haar Like Features->
+
+The haar like features are edge features, line features and 4 rectangle features.
+In each feature, a slighly darker area is detected, compared to the surrounding area. If the darker area is between two lighter area, it is a line feature. If the darker area is between the edge and the lighter area, it is an edge feature.
+Eg, the dark area between the closed lips in a photo is a line feature. The iris inside the eye can also be considered as line detection.
+Eg, the eye brow is draker than forehead, so the edge signifies the edge between eyeborw and forehead.
+
+Consider the bridge of the nose which we identified as edge detection. Now, we split that area into multiple pixels and assign a number to each pixel based on the brightness in that pixel region. The brightness is between 0 and 1. 1 for black, 0 for white.
+Now, what viola jones algorithm does is compare the numbers we assigned to the ideal scenario(which is one side completely white, one side completely black). So it takes the average of the brightness of the pixels on the white side of the edge haar and the average of brightness of the pixels on the black side of the edge haar. It then subtracts white average from black average.
+Now, in an ideal scenario, the result for black-white should give 1. SO, as its not possible to get 1, there are some threshold sdefined by training the classifier. If the result is greater than 0.3 (say) , then the region is correctly classified as adge haar.
+
+See https://www.udemy.com/computer-vision-a-z/learn/lecture/8085352#questions
