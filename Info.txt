@@ -2,9 +2,10 @@ First of all, all the algorithms work on grayscale features, not colored.
 
 Viola Jones Algorithm for face detection->
 
+Algorithm has 2 stages. Training and detection
 This is mainly used in OpenCV and was developed in 2001. It's still pretty good but deep learning is now slowly overpassing it.
 It takes the image in grayscale, and forms a little box and traverses the whole image with that box. The box detected eyebrows,eyes,nose,mouth and thus recognizes the face. Beacuse of this, i fmany such squares detect a face, there is high probablity that a face is present in the image. The size of the box also varies over every iteration.
-
+------------------------------------------------------------
 Haar Like Features->
 
 The haar like features are edge features, line features and 4 rectangle features.
@@ -16,4 +17,41 @@ Consider the bridge of the nose which we identified as edge detection. Now, we s
 Now, what viola jones algorithm does is compare the numbers we assigned to the ideal scenario(which is one side completely white, one side completely black). So it takes the average of the brightness of the pixels on the white side of the edge haar and the average of brightness of the pixels on the black side of the edge haar. It then subtracts white average from black average.
 Now, in an ideal scenario, the result for black-white should give 1. SO, as its not possible to get 1, there are some threshold sdefined by training the classifier. If the result is greater than 0.3 (say) , then the region is correctly classified as adge haar.
 
-aaaaaaaaaaaaaaaaaaa    See https://www.udemy.com/computer-vision-a-z/learn/lecture/8085352#questions
+See https://www.udemy.com/computer-vision-a-z/learn/lecture/8085352#questions
+---------------------------------------------------------
+Integral Image->
+Now,  this will be an extremely time and resource intensive process, so as a result we use Integral Image.
+In an integral image, the value in that square will be the sum of all squares above and to the left of the image. Eg- If we consider square (3,4), we add the values of square (1,1)(1,2)(1,3)(1,4)(2,1)(2,2)(2,3)(2,4)(3,1)(3,2)(3,3) and (3,4).
+We do this for all the squares in the original image(Each square in the original image is abrightness indicator, which we use to sum up in integral image).
+
+So basically, in an normal image, to calculate the answer for a rectangle, we add up all the values(which in a 3x4 will n=mean 12 operations). In an integral image, to calculate answer for the reactangle, we only need 4 operations. See video https://www.udemy.com/computer-vision-a-z/learn/lecture/8085354?start=30#questions around 6 minutes.
+Even in a 1000x1000 recatngle, we only nned to perform 4 operations in integral image, while in normal image we will need 1000000 operations, to get the answer of the rectangle.
+
+We only consider rectangles as haar like features use only rectangles.
+-------------------------------------------------------------------
+
+Training Classifiers-> 
+As we'd said the Viola Jones Algo has 2 stages, training and detection. Till now we have seen detection, now we start training. Basically trainig deals with what features are present, identifying them and '
+The algorithm shrinks the image to 24x24 pixels and and then checks for edge,line and rectangular features. These features can be 1px by 1px, 2 by2 or anything.
+When we're training we scale the image down and apply the features on it, thus we get lesser combinations. While detecting, we scale the features, up, not image down.
+But one image is not enough, thats why we need to supply lots of different images to the algorith, so it can determine whihc features are common, so in the end, it it looks at that feature, it can deduce that there is a face.
+If there are less images of faces available, take mirror images of them to increase the dataset.
+Now we also have to supply non face images, so the algo can determine which features are common only in faces and nothing else.
+These however dont need to be 24x24, so from each image we can take out sub images which further increases the training set of non face images which we have. 
+For false positive see https://www.udemy.com/computer-vision-a-z/learn/lecture/8086198#questions around 9 min.
+
+----------------------------------------------------------------
+Adaboost(Adaptive Boost)->
+
+Even in a 24x24 image, the number of features is huge(180000). This is because, the haar feauters which we consider, all can have many permutations of size and position, etc.
+
+This will take  alot of time as we have to do this for all images in the dataset.
+We take all our features an put them in a classifier. This is represenyted by an equation. Each feature is called a weak classifier, as on its own, it doesnt get a very high rate of success. But taken together, it forms a strogn classifier. So we dont need all 180000 of the features, we need maybe a 1000 to get a really strong classifier after taking the 1000 together.
+ So now we need to find the best features to select. The best approach will be taking a feature and another which complements this, not another which basically does the same thing. 
+So when it use sthe first weak classifer, it gets some false positives and false negatives. Then to fix these, it uses another feature whihc fixes some of these. Then another which fixes more and so on.
+See https://www.udemy.com/computer-vision-a-z/learn/lecture/8102540#questions around 4 min.
+
+-----------------------------------------------------------------
+Cascading->
+
+we take a sub window and look for the feature in that, if it is not present , we reject the sub window. So logic is that if there's no nose in the image, theres not point in searching for more features. Then we take another sub window fo rthe next feature. So now if there is a nose but no lip, we reject it...this keeps going on for all the features in the string classifier equation
