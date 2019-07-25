@@ -1,0 +1,7 @@
+The foloowing steps will create a virtual environment with all the required packages already installed.
+
+Open Anaconda Prompt
+Go to the folder containing the YML files.(to go a different drive, navigate to C:\, then type E:\, then navigate to the folder containing YML files.)
+Type conda env create -f virtual_platform_windows.yml(or virtual_platform_mac or virtual_platform_linux)
+
+See the solutions.txt file if any errors arise.

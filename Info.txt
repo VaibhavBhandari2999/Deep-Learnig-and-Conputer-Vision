@@ -54,4 +54,5 @@ See https://www.udemy.com/computer-vision-a-z/learn/lecture/8102540#questions ar
 -----------------------------------------------------------------
 Cascading->
 
-we take a sub window and look for the feature in that, if it is not present , we reject the sub window. So logic is that if there's no nose in the image, theres not point in searching for more features. Then we take another sub window fo rthe next feature. So now if there is a nose but no lip, we reject it...this keeps going on for all the features in the string classifier equation
+we take a sub window and look for the feature in that, if it is not present , we reject the sub window. So logic is that if there's no nose in the image, theres not point in searching for more features. Then we take another sub window fo rthe next feature. So now if there is a nose but no lip, we reject it...this keeps going on for all the features in the string classifier equation.
+So now, we change it so that in the first step it looks at top 5 or 2 features instead of just 1, and then 2nd step will be top 20 or 30 feautures, as everytime the features are becoming less important, it is taking more of them
