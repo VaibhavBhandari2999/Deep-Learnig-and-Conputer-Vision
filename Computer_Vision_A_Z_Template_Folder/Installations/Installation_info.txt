@@ -5,3 +5,7 @@ Go to the folder containing the YML files.(to go a different drive, navigate to 
 Type conda env create -f virtual_platform_windows.yml(or virtual_platform_mac or virtual_platform_linux)
 
 See the solutions.txt file if any errors arise.
+
+'conda list' shows all the installed dependancies and libraries in the virtual environment
+
+The go to anaconda navigator, and in applications on, in the drop down, slect virtual_platform and then launch spyder.

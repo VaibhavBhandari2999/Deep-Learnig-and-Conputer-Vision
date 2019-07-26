@@ -4,10 +4,12 @@ If the error sis " ResolvePackageNotFound error"
  2. Delete: line 92 (i.e. the line: - pytorch=0.1.12=py35_0.1.12cu80) and line 100 (- torch==0.1.12)
  3. Save
  4. Execute: conda env create -f virtual_platform_windows.yml
- 5. Activate virtual environment: source activate virtual_platform
+ 5. Activate virtual environment: conda activate virtual_platform
  6. Run an update of all the packages: conda update --all
  7. Install Pytorch seperately with: conda install -c peterjc123 pytorch cuda80
 Step 4: Install torch vision with: pip install torchvision-0.2.0-py2.py3-none-any.whl
+
+Or conda install pytorch-cpu torchvision-cpu -c pytorch
 
 The different pytorch's are:
 
