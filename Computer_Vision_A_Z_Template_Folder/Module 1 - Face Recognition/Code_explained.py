@@ -15,6 +15,8 @@ def detect(gray,frame):            #The input for this function will be images c
         # x and y are coordinates of upper left corner of rectangle
         #w and h is width and height of rectangle
 
+#Basically the haarcascades detect the eyes and faces,we just get the rectangles from there 
+
     for (x, y, w, h) in faces:                          #faces contains these tuples
             cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)        #We draw the rectangles around the face. The arguements are frame(we draw the rectangle around the frame image) and the tuple of coordinates of the upper left corner of the rectangle(which is x and y) and third arguement is tuple of coordnates of lower right corner of rectangle and that we can get by taking x+w and y+h, 4th coordinate is the color(rgb code), 5th arguement is thickness of rectangles.
             
@@ -23,3 +25,21 @@ def detect(gray,frame):            #The input for this function will be images c
             roi_gray = gray[y:y+h, x:x+w]       #The zones of the rectangle
             roi_color = frame[y:y+h, x:x+w]
             eyes = eye_cascade.detectMultiScale(roi_gray, 1.1, 3)       #SImilar to detectMultiScale for faces.
+            for (ex, ey, ew, eh) in eyes:                               #For 2 eyes, we get two rectangles.
+                                                                        #These ex,ey,ew,eh are the coordinates of upper left corner of eye box, eh and ew are height and width of the rectangles.
+                cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)#Similar to faces
+            return frame#We want tor eturn the frame only as we have printed the rectangles of face and eyes on the frame
+     
+# Doing some Face Recognition with the webcam
+video_capture = cv2.VideoCapture(0) # We turn the webcam on. We put 0 if its webcam of the laptop, we put 1 if its an external webcam
+                                    #Video_capture is an object which has many methods
+#We make a while loop as the webcam should be on and the faces should keep getting deteceted as long as the user doesnt manually switch it off.
+while True:
+    _, frame = video_capture.read()         #The read method returns 2 elements but we're only interested in the second one, so we put the first one as _ so that we wont get the first element returned by this method
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  #cvtColor allows us to do some transformations on some frames. So the transformation which we do is change the the frame to grayscale. The second arguement cv2.COLOR_BGR2GRAY tells to do an average on Blue, green and red to get the right constrast when it is converted to grayscale.
+    canvas = detect(gray, frame)                # we apply the detect function, and the frame returned is saved in canvas
+    cv2.imshow('Video', canvas)             #imshow displays the video and the canvas(which is the image coming from the webcam with the rectangles on top of it)
+    if cv2.waitKey(1) & 0xFF == ord('q'):       #This is to stop the webcam and face detection only if 'q' is typed.
+        break#So if q is typed the infinite while loop is broken
+video_capture.release()                         #To turn off the webcam
+cv2.destroyAllWindows()                         #To destroy the window in which all cv2 images were displayed
