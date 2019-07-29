@@ -1,0 +1,38 @@
+Generative Adversial Networks(GANs)
+
+Idea->
+This idea came about because AI engineers wanted to make a Neural Network which could create on its own. Till then neural networks could classify, or predict or train, but not create.
+GANs can generate images (which exist or dont)
+.
+They have 2 components- Generator and Discriminator. These two are constantly in touch.
+The generator generate simages while the discriminator assess those images and tells the generator whether or not those images are similar to what is has seen in the real world. its not like the discriminator already knows about the objects in the world, it has to start from  scratch.
+Eg- The generator will generate images of a atble, the discriminator will look at the picture and look a real pictures of tables and will decide and learn what is a  table and what isnt( as it knows that what the generator exists is not real ). The discriminator has that knowledge
+----------------------------
+How do GANs work->
+G-> Generative. A model which takes as input a random noise signal and output an image
+A->Adverserial. Stands for the discriminator. Another part rivalling generator.(Checks whatever generator has made andverifys or factchecks them). CAn learn about objects or animals or people or whatever the generator makes
+N->Neural Network.These processes of Generative and Adverserial take place through neural networks.
+
+The neural network used is Deconvulational Neural Network(exactly opposite to a convulutional Neural network)
+
+Training(https://www.udemy.com/computer-vision-a-z/learn/lecture/8226360#questions/3155444)-> 
+1. Input a noise signal into our generator(randomly) and it generates some images. These are completeley random and useless images. Here we need to train the discriminator. We want the discriminator to be able to distinguish between dogs and non dogs. So with the random image sthat we generated, we feed it some pictures of dogs and non-dogs and we will see what probabilities the discriminator gives out.
+	Here, the disct=riminator doesnt know anything,hasnt been trained at all, so the discriminator will give out random probabolities of non dogs being dogs and vice versa(as it doesnt know what a dog is). So now the error is calculated,(subtracting the value given by discriminator - actual value(actual value meaning 0 for non dog, 1 for dog) ) . This error is back-propogated through the network ad the wights of the networks are updated.This is basically the learning process of the discriminator(similar to back propogation in CNN or ANN).
+	
+	So now we train the generator. We take the same image()images which the generator created which were supposed to be dogs and use them aagin. So we take those images and run them through the discrimanitor. But this time we dont need any dog images as the way the generator learns is trying to trick the discriminator and based on whether it succeeds or not, it will update the weights(so it doesnt need to test with dogs and non dogs, it just needs to trick the discriminator), so the discriminator provides an output(a better output than last time as the discriminator has trained itself once, so now it roughly knows what a dog looks like and what it doesnt look like). Now for calculating the error, we subtract the values from 1(not 0) and that will be back propogated back to the generator, and the generator will update its weight.
+2. BAsically the same thing. Noise goes into the generator which generates some images which are no longer as random as before, they are clearer(as through the back-propogation it has adjusted weights and learnt where it has made mistakes and has tried to fix those mistakes). Now we train the discriminator again, we input a new batch of dogs and non dogs, Discriminator will output some values, the error is got from subtarcting those values form 1 and 0 respectively for dogs and non dogs, error is back propogated to itself an dit learns a bit more.
+	Now we want to train the generator. So we use the same images(which it generated previously) put them through the discrimiator(which will output better more accurate values(as it has gone through 2 learning iterations till now)). Again the error is calculated by subtracting value from 1 and the error is back propogated to generator whihc adjusts itself.
+
+3. Generator generates dogs with eyes this time which looks more 3d, again feed to discrimiator along with dog and non dog images and the discriminator will give values for dogs and non dogs. These values ar ebecoming closer an dit is becoming harder for the discriminator to distinguish between dogs and non dogs. SO again the discriniator gets the error which is back propogated and updates the discriminator. Same thing happens for the generator, the error got at discriminator is back propogated to the generator and update sthe weights there. 
+
+Applications->
+
+https://www.udemy.com/computer-vision-a-z/learn/lecture/8226356#questions
+
+Generating IMages
+Image modeification
+super reolution
+Assisting artists
+Photo realistic Images
+Speech Generation
+Face Ageing
